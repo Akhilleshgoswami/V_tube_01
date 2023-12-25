@@ -1,0 +1,17 @@
+{
+  "name": "V_tube",
+  "version": "1.0.0",
+  "description": "A video streaming platforms",
+  "main": "index.js",
+  "author": "Akhilesh goswami",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "dev": "nodemon/index.js"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2",
+    "prettier": "^3.1.1"
+  }
+}
+ 
