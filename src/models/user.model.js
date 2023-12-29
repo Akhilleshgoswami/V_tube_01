@@ -50,11 +50,11 @@ const userSchema = new Schema(
 //  this logic is used to encrypt the passowrd when even we add new one or update one
 userSchema.pre("save", async function (next) {
   if (!this.isModified("password")) return next();
-  this.passowrd = bcrypt.hash(this.passowrd, 10);
+  this.passowrd = await bcrypt.hash(this.passowrd, 10);
   next();
 });
 userSchema.methods.isPasswordCorrect = async function (password) {
-  return await bcrypt.compare(password, this.password, 10);
+  return  await bcrypt.compare(password, this.password, 10);
 };
 userSchema.methods.generateAccessToken = function () {
   return jwt.sign(
