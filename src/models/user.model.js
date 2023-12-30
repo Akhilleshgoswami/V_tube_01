@@ -37,7 +37,7 @@ const userSchema = new Schema(
         ref: "Video",
       },
     ],
-    passowrd: {
+    password: {
       type: String,
       required: [true, "Passowrd is required"],
     },
@@ -50,11 +50,11 @@ const userSchema = new Schema(
 //  this logic is used to encrypt the passowrd when even we add new one or update one
 userSchema.pre("save", async function (next) {
   if (!this.isModified("password")) return next();
-  this.passowrd = await bcrypt.hash(this.passowrd, 10);
+  this.password = await bcrypt.hash(this.password, 10);
   next();
 });
 userSchema.methods.isPasswordCorrect = async function (password) {
-  return  await bcrypt.compare(password, this.password, 10);
+  return await bcrypt.compare(password, this.password);
 };
 userSchema.methods.generateAccessToken = function () {
   return jwt.sign(
@@ -75,7 +75,7 @@ userSchema.methods.generateRefreshToken = async function () {
     {
       _id: this._id,
     },
-    process.env.REFRESH_TOKEN,
+    process.env.REFRESH_TOKEN_SECRET,
     {
       expiresIn: process.env.REFRESH_TOKEN_EXPIRY,
     }
