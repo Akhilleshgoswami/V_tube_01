@@ -144,9 +144,12 @@ const logOutUser = asyncHandler(async (req, res) => {
       req.user._id,
 
       {
-        $set: {
-          refreshToken: undefined,
+        $unset: {
+          refreshToken: 1,
         },
+      },
+      {
+        new:true
       }
     );
     const options = {
@@ -162,7 +165,7 @@ const logOutUser = asyncHandler(async (req, res) => {
     return res
       .status(500)
       .json(
-        new ApiResponse500(),
+        new ApiResponse(500,{},"Error while logout user"),
         {},
         "something went worng while logout the user"
       );
@@ -297,8 +300,10 @@ const updateUserCoverImage = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, user, "Account details updated successfully"));
 });
 const getUserChannelProfile = asyncHandler(async (req, res) => {
-  const { username } = req.params;
+  const  username  = req.query.username;
+  console.log(req.query.username)
   if (!username?.trim()) {
+    console.log(username)
     throw new ApiError(400, "Username is missing");
   }
   const channel = await User.aggregate([
@@ -408,7 +413,13 @@ const getUserWatchHistory = asyncHandler(async (req, res) => {
   ]);
   return res
     .status(200)
-    .json(new ApiResponse(200, user[0].watchHistory, "User history fetched successfully"));
+    .json(
+      new ApiResponse(
+        200,
+        user[0].watchHistory,
+        "User history fetched successfully"
+      )
+    );
 });
 export {
   registerUser,
@@ -423,3 +434,4 @@ export {
   getUserChannelProfile,
   getUserWatchHistory,
 };
+
