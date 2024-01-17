@@ -256,7 +256,8 @@ const updateAccountDetails = asyncHandler(async (req, res) => {
 
 const updateUserAvatar = asyncHandler(async (req, res) => {
   let avatarLocalPath;
-  if (req.file?.avatar[0]) {
+  console.log(req.file)
+  if (req.file?.fieldname === 'avatar') {
     avatarLocalPath = req.file?.path;
   }
 
@@ -301,7 +302,7 @@ const updateUserCoverImage = asyncHandler(async (req, res) => {
 });
 const getUserChannelProfile = asyncHandler(async (req, res) => {
   const  username  = req.query.username;
-  console.log(req.query.username)
+
   if (!username?.trim()) {
     console.log(username)
     throw new ApiError(400, "Username is missing");
