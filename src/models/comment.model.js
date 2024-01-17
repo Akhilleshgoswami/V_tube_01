@@ -1,4 +1,4 @@
-import { Schema, mongooes } from "mongoose";
+import mongoose, { Schema } from "mongoose";
 import mongooseAggregatePaginate from "mongoose-aggregate-paginate-v2";
 
 const commentSchema = new Schema(
@@ -21,4 +21,4 @@ const commentSchema = new Schema(
   }
 );
 commentSchema.plugin(mongooseAggregatePaginate);
-export const Comment = mongooes.model("Comment", commentSchema);
+export const Comment = mongoose.model("Comment", commentSchema);
